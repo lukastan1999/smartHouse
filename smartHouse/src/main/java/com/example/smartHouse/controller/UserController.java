@@ -1,6 +1,6 @@
 package com.example.smartHouse.controller;
 
-import com.example.smartHouse.entity.User;
+import com.example.smartHouse.dto.RegistrationRequest;
 import com.example.smartHouse.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +16,19 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/add")
-    public User addUser(@RequestBody User user) {
-        return userService.saveUser(user);
+    @PostMapping("/register")
+    public String registerUser(@RequestBody RegistrationRequest request) {
+        userService.registerUser(request);
+        return "Registration successful. Please check your email to activate your account.";
+    }
+
+    @GetMapping("/activate")
+    public String activateUser(@RequestParam("token") String token) {
+        boolean isActivated = userService.activateUser(token);
+        if (isActivated) {
+            return "Account activated successfully!";
+        } else {
+            return "Activation link is invalid or has expired. Please register again.";
+        }
     }
 }
