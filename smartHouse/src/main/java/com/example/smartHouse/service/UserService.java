@@ -62,6 +62,9 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findByActivationToken(token);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
+            if (user.isActive()) {
+                return false;
+            }
             if (user.getActivationTokenExpiry().isBefore(LocalDateTime.now())) {
                 return false;
             }

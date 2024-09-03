@@ -28,7 +28,8 @@ public class UserController {
         if (isActivated) {
             return "Account activated successfully!";
         } else {
-            return "Activation link is invalid or has expired. Please register again.";
+            return "Activation link is invalid or has expired. It is also possible " +
+                    "that the account is activated. Please register again or log in.";
         }
     }
 }

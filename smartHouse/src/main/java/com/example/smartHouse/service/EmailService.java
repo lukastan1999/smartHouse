@@ -1,48 +1,28 @@
 package com.example.smartHouse.service;
 
 import com.example.smartHouse.entity.User;
-import com.sendgrid.Method;
-import com.sendgrid.Request;
-import com.sendgrid.SendGrid;
-import com.sendgrid.helpers.mail.Mail;
-import com.sendgrid.helpers.mail.objects.Content;
-import com.sendgrid.helpers.mail.objects.Email;
-import com.sendgrid.helpers.mail.objects.Personalization;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
 
 @Service
 public class EmailService {
 
-    private final SendGrid sendGrid;
+    private final JavaMailSender mailSender;
 
-    @Value("${sendgrid.api.key}")
-    private String sendGridApiKey;
-
-    public EmailService() {
-        this.sendGrid = new SendGrid(sendGridApiKey);
+    @Autowired
+    public EmailService(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
     }
 
     public void sendEmail(String to, String subject, String text) {
-        Email from = new Email("no-reply@smarthouse.com"); // Replace with your "from" email
-        Email toEmail = new Email(to);
-        Content content = new Content("text/plain", text);
-
-        Mail mail = new Mail(from, subject, toEmail, content);
-
-        Request request = new Request();
-        try {
-            request.setMethod(Method.POST);
-            request.setEndpoint("mail/send");
-            request.setBody(mail.build());
-
-            sendGrid.api(request);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            // Handle the exception properly in production
-        }
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(text);
+        message.setFrom("sveisvasta2024@outlook.com");
+        mailSender.send(message);
     }
 
     public void sendActivationEmail(User user) {
