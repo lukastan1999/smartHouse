@@ -1,1 +1,54 @@
-<p>registration works!</p>
+<div class="registration-container">
+    <h2>Register</h2>
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="name">Name:</label>
+        <input id="name" formControlName="name" required>
+      </div>
+      
+      <div>
+        <label for="surname">Surname:</label>
+        <input id="surname" formControlName="surname" required>
+      </div>
+  
+      <div>
+        <label for="email">Email:</label>
+        <input id="email" type="email" formControlName="email" required>
+      </div>
+  
+      <div>
+        <label for="password">Password:</label>
+        <input id="password" type="password" formControlName="password" required>
+      </div>
+  
+      <div>
+        <label for="confirmPassword">Confirm Password:</label>
+        <input id="confirmPassword" type="password" formControlName="confirmPassword" required>
+      </div>
+  
+      <div>
+        <label for="address">Address:</label>
+        <input id="address" formControlName="address" required>
+      </div>
+  
+      <div>
+        <label for="phoneNumber">Phone Number:</label>
+        <input id="phoneNumber" formControlName="phoneNumber" required>
+      </div>
+  
+      <div>
+        <label for="role">Role:</label>
+        <select id="role" formControlName="role">
+          <option value="HOST">Host</option>
+          <option value="GUEST">Guest</option>
+        </select>
+      </div>
+  
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+  
+      <button type="submit" [disabled]="registrationForm.invalid">Register</button>
+    </form>
+  </div>
+  
