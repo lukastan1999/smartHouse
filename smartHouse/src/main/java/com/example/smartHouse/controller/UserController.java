@@ -1,5 +1,6 @@
 package com.example.smartHouse.controller;
 
+import com.example.smartHouse.dto.LoginDto;
 import com.example.smartHouse.dto.RegistrationRequest;
 import com.example.smartHouse.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,12 @@ public class UserController {
     public String registerUser(@RequestBody RegistrationRequest request) {
         userService.registerUser(request);
         return "Registration successful. Please check your email to activate your account.";
+    }
+
+    @PostMapping("/login")
+    public String loginUser(@RequestBody LoginDto loginDto) {
+        userService.loginUser(loginDto);
+        return "Login successful.";
     }
 
     @GetMapping("/activate")

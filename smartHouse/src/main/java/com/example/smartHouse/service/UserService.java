@@ -1,5 +1,6 @@
 package com.example.smartHouse.service;
 
+import com.example.smartHouse.dto.LoginDto;
 import com.example.smartHouse.dto.RegistrationRequest;
 import com.example.smartHouse.entity.User;
 import com.example.smartHouse.repository.UserRepository;
@@ -20,6 +21,16 @@ public class UserService {
     public UserService(UserRepository userRepository, EmailService emailService) {
         this.userRepository = userRepository;
         this.emailService = emailService;
+    }
+
+    public User loginUser(LoginDto loginDto) {
+        Optional<User> optionalUser = userRepository.findByEmail(loginDto.getEmail());
+        if (optionalUser.isPresent()) {
+            if (optionalUser.get().getPassword().equals(loginDto.getPassword())) {
+                return optionalUser.get();
+            }
+        }
+        return null;
     }
 
     public User registerUser(RegistrationRequest request) {
@@ -79,4 +90,6 @@ public class UserService {
 
         return false;
     }
+
+
 }
