@@ -2,6 +2,7 @@ package com.example.smartHouse.controller;
 
 import com.example.smartHouse.dto.LoginDto;
 import com.example.smartHouse.dto.RegistrationRequest;
+import com.example.smartHouse.entity.User;
 import com.example.smartHouse.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,10 +42,11 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public String loginUser(@RequestBody LoginDto loginDto) {
-        userService.loginUser(loginDto);
-        return "Login successful.";
+    public User loginUser(@RequestBody LoginDto loginDto) {
+        User user = userService.loginUser(loginDto);
+        return user;
     }
+
 
     @GetMapping("/activate")
     public String activateUser(@RequestParam("token") String token) {
