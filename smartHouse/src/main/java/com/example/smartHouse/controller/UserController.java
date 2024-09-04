@@ -4,7 +4,12 @@ import com.example.smartHouse.dto.LoginDto;
 import com.example.smartHouse.dto.RegistrationRequest;
 import com.example.smartHouse.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -18,11 +23,22 @@ public class UserController {
         this.userService = userService;
     }
 
+//    @PostMapping("/register")
+//    public ResponseEntity<String> registerUser(@RequestBody RegistrationRequest request) {
+//        userService.registerUser(request);
+//        return ResponseEntity
+//                .status(HttpStatus.OK)
+//                .body("Registration successful. Please check your email to activate your account.");
+//    }
+
     @PostMapping("/register")
-    public String registerUser(@RequestBody RegistrationRequest request) {
+    public Map<String, String> registerUser(@RequestBody RegistrationRequest request) {
         userService.registerUser(request);
-        return "Registration successful. Please check your email to activate your account.";
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Registration successful. Please check your email to activate your account.");
+        return response;
     }
+
 
     @PostMapping("/login")
     public String loginUser(@RequestBody LoginDto loginDto) {
