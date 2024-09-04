@@ -26,8 +26,10 @@ public class UserService {
     public User loginUser(LoginDto loginDto) {
         Optional<User> optionalUser = userRepository.findByEmail(loginDto.getEmail());
         if (optionalUser.isPresent()) {
-            if (optionalUser.get().getPassword().equals(loginDto.getPassword())) {
-                return optionalUser.get();
+            if (optionalUser.get().isActive()) {
+                if (optionalUser.get().getPassword().equals(loginDto.getPassword())) {
+                    return optionalUser.get();
+                }
             }
         }
         return null;
