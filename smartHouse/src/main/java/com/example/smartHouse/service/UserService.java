@@ -61,7 +61,8 @@ public class UserService {
         userRepository.save(user);
 
         // Send activation email
-        emailService.sendActivationEmail(user);
+        // NARAVNO DA MEJL NE RADI
+//        emailService.sendActivationEmail(user);
 
         return user;
     }
