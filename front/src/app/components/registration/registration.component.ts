@@ -11,6 +11,8 @@ import { RegistrationService } from '../../services/registration.service';
 export class RegistrationComponent {
   registrationForm: FormGroup;
   submitted = false;
+  responseMessage: string = ''; // Variable to store the response message
+  isSuccess: boolean = false;   // Flag to indicate if the registration was successful
   user = {
     name: '',
     surname: '',
@@ -55,10 +57,14 @@ export class RegistrationComponent {
       response => {
         console.log('Registration successful', response);
         // You can also show a success message to the user or redirect them
+        this.responseMessage = 'Registration successful. Please check your email to activate your account.';
+        this.isSuccess = true;
       },
       error => {
         console.error('Registration failed', error);
         // You can show an error message to the user here
+        this.responseMessage = 'Registration failed. Please try again.';
+        this.isSuccess = false;
       }
     );
   }
