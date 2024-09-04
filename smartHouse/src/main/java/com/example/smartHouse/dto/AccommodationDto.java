@@ -7,6 +7,7 @@ import java.util.List;
 
 @Data
 public class AccommodationDto {
+    private Long userId;
     private String title;
     private String description;
     private String location;

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -95,4 +96,15 @@ public class UserService {
     }
 
 
+    public Boolean addAccommodation(Long userId, Long id) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            List<Long> lista = optionalUser.get().getAccommodationIds();
+            lista.add(id);
+            optionalUser.get().setAccommodationIds(lista);
+            userRepository.save(optionalUser.get());
+            return true;
+        }
+        return false;
+    }
 }

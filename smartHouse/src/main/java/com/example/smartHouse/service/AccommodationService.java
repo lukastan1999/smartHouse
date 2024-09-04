@@ -14,10 +14,12 @@ import java.util.Optional;
 public class AccommodationService {
 
     private final AccommodationRepository accommodationRepository;
+    private final UserService userService;
 
     @Autowired
-    public AccommodationService(AccommodationRepository accommodationRepository) {
+    public AccommodationService(AccommodationRepository accommodationRepository, UserService userService) {
         this.accommodationRepository = accommodationRepository;
+        this.userService = userService;
     }
 
     public Accommodation registerAccommodation(AccommodationDto accommodationDto) {
@@ -30,8 +32,13 @@ public class AccommodationService {
         accommodation.setMaxGuest(accommodationDto.getMaxGuest());
         accommodation.setAmenities(accommodationDto.getAmenities());
         accommodation.setAvailable(accommodationDto.getAvailable());
-        accommodationRepository.save(accommodation);
-        return accommodation;
+        // pripisivanje smestaja gazdi
+        Boolean b = userService.addAccommodation(accommodationDto.getUserId(), accommodation.getId());
+        if (b) {
+            accommodationRepository.save(accommodation);
+            return accommodation;
+        }
+        return null;
     }
 
     public Boolean take(Long id, LocalDate date) {
