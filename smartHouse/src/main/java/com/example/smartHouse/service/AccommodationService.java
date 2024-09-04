@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AccommodationService {
@@ -31,5 +32,24 @@ public class AccommodationService {
         accommodation.setAvailable(accommodationDto.getAvailable());
         accommodationRepository.save(accommodation);
         return accommodation;
+    }
+
+    public Boolean take(Long id, LocalDate date) {
+        Optional<Accommodation> accommodation = accommodationRepository.findById(id);
+        if (accommodation.isPresent()) {
+            List<LocalDate> dani = accommodation.get().getAvailable();
+            List<LocalDate> daniZauzeti = accommodation.get().getTaken();
+            for (LocalDate dejt : dani) {
+                if (dejt.equals(date)) {
+                    dani.remove(dejt);
+                    daniZauzeti.add(dejt);
+                    accommodation.get().setAvailable(dani);
+                    accommodation.get().setTaken(daniZauzeti);
+                    accommodationRepository.save(accommodation.get());
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
