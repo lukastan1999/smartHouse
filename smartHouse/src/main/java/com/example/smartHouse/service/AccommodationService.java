@@ -52,4 +52,22 @@ public class AccommodationService {
         }
         return false;
     }
+
+    public Boolean redefine(Long id, List<LocalDate> datumi) {
+        Optional<Accommodation> accommodation = accommodationRepository.findById(id);
+        if (accommodation.isPresent()) {
+            List<LocalDate> daniZauzeti = accommodation.get().getAvailable();
+            for (LocalDate dejt : datumi) {
+                for (LocalDate datum : daniZauzeti) {
+                    if (datum.equals(dejt)) {
+                        return false;
+                    }
+                }
+            }
+            accommodation.get().setAvailable(datumi);
+            accommodationRepository.save(accommodation.get());
+            return true;
+        }
+        return false;
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.smartHouse.controller;
 
 import com.example.smartHouse.dto.AccommodationDto;
+import com.example.smartHouse.dto.RedefineDto;
 import com.example.smartHouse.dto.TakeDto;
 import com.example.smartHouse.entity.Accommodation;
 import com.example.smartHouse.service.AccommodationService;
@@ -36,6 +37,18 @@ public class AccommodationController {
         Map<String, String> response = new HashMap<>();
         if (b) {
             response.put("message", "Accommodation taken successfully!");
+            return response;
+        }
+        response.put("message", "ERROR");
+        return response;
+    }
+
+    @PostMapping("/redefine")
+    public Map<String, String> redefineAccommodation(@RequestBody RedefineDto redefineDto) {
+        Boolean b = accommodationService.redefine(redefineDto.getId(), redefineDto.getDatumi());
+        Map<String, String> response = new HashMap<>();
+        if (b) {
+            response.put("message", "Accommodation redefined successfully!");
             return response;
         }
         response.put("message", "ERROR");
