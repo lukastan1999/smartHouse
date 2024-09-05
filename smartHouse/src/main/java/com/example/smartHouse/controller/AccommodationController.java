@@ -5,7 +5,10 @@ import com.example.smartHouse.dto.RedefineDto;
 import com.example.smartHouse.dto.TakeDto;
 import com.example.smartHouse.entity.Accommodation;
 import com.example.smartHouse.service.AccommodationService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,15 +47,22 @@ public class AccommodationController {
     }
 
     @PostMapping("/redefine")
-    public Map<String, String> redefineAccommodation(@RequestBody RedefineDto redefineDto) {
-        Boolean b = accommodationService.redefine(redefineDto.getId(), redefineDto.getDatumi());
-        Map<String, String> response = new HashMap<>();
-        if (b) {
-            response.put("message", "Accommodation redefined successfully!");
-            return response;
+    public ResponseEntity<?> redefineAccommodation(@Valid @RequestBody RedefineDto redefineDto, BindingResult result) {
+        // Check for validation errors
+        if (result.hasErrors()) {
+            // If there are validation errors, return a 400 Bad Request with the error message
+            String errorMessage = result.getFieldError().getDefaultMessage();
+            return ResponseEntity.badRequest().body("{\"message\":\"" + errorMessage + "\"}");
         }
-        response.put("message", "ERROR");
-        return response;
+
+        // Proceed with the accommodation redefinition
+        boolean isRedefined = accommodationService.redefine(redefineDto.getId(), redefineDto.getDatumi());
+
+        if (isRedefined) {
+            return ResponseEntity.ok().body("{\"message\":\"Accommodation redefined successfully!\"}");
+        } else {
+            return ResponseEntity.ok().body("{\"message\":\"ERROR\"}");
+        }
     }
 
 }
