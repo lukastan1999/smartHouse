@@ -1,0 +1,12 @@
+<div *ngIf="accommodation">
+    <h1>{{ accommodation.title }}</h1>
+    <p>{{ accommodation.description }}</p>
+    <p><strong>Location:</strong> {{ accommodation.location }}</p>
+    <p><strong>Amenities:</strong> {{ accommodation.amenities }}</p>
+    <p><strong>Minimum Guests:</strong> {{ accommodation.minGuest }}</p>
+    <p><strong>Maximum Guests:</strong> {{ accommodation.maxGuest }}</p>
+    <p><strong>Type:</strong> {{ accommodation.type }}</p>
+    <p><strong>Price:</strong> ${{ accommodation.price }}</p>
+    <p><strong>Available Dates:</strong> {{ accommodation.available.join(', ') }}</p>
+    <p><strong>Taken Dates:</strong> {{ accommodation.taken.join(', ') }}</p>
+</div>

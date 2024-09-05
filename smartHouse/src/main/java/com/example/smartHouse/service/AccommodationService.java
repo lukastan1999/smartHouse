@@ -77,4 +77,9 @@ public class AccommodationService {
         }
         return false;
     }
+
+    public Accommodation get(Long id) {
+        Optional<Accommodation> accommodation = accommodationRepository.findById(id);
+        return accommodation.orElse(null);
+    }
 }
