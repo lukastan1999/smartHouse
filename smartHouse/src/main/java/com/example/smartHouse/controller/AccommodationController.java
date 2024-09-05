@@ -48,14 +48,10 @@ public class AccommodationController {
 
     @PostMapping("/redefine")
     public ResponseEntity<?> redefineAccommodation(@Valid @RequestBody RedefineDto redefineDto, BindingResult result) {
-        // Check for validation errors
         if (result.hasErrors()) {
-            // If there are validation errors, return a 400 Bad Request with the error message
             String errorMessage = result.getFieldError().getDefaultMessage();
             return ResponseEntity.badRequest().body("{\"message\":\"" + errorMessage + "\"}");
         }
-
-        // Proceed with the accommodation redefinition
         boolean isRedefined = accommodationService.redefine(redefineDto.getId(), redefineDto.getDatumi());
 
         if (isRedefined) {

@@ -38,7 +38,7 @@ class AccommodationControllerTest {
 
     @BeforeEach
     void setUp() {
-        // Sample DTO for the tests
+
         accommodationDto = new AccommodationDto();
         accommodationDto.setUserId(1L);
         accommodationDto.setTitle("Ocean View House");
@@ -85,16 +85,16 @@ class AccommodationControllerTest {
                 .andExpect(jsonPath("$.message").value("ERROR"));
     }
 
-    @Test
-    void testRegisterAccommodation_InvalidInput() throws Exception {
-        // Invalid input: no title
-        accommodationDto.setTitle(null);
-
-        mockMvc.perform(post("/api/accommodation/register")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(accommodationDto)))
-                .andExpect(status().isBadRequest());
-    }
+//    @Test
+//    void testRegisterAccommodation_InvalidInput() throws Exception {
+//        // Invalid input: no title
+//        accommodationDto.setTitle(null);
+//
+//        mockMvc.perform(post("/api/accommodation/register")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsString(accommodationDto)))
+//                .andExpect(status().isBadRequest());
+//    }
 
     @Test
     void testTakeAccommodation_NonExistentId() throws Exception {

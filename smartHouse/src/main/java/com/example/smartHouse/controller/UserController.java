@@ -58,4 +58,5 @@ public class UserController {
                     "that the account is activated. Please register again or log in.";
         }
     }
+
 }

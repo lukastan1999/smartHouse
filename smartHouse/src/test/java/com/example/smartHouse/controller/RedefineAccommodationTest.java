@@ -13,8 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -49,7 +47,7 @@ public class RedefineAccommodationTest {
 
     @Test
     void testRedefineAccommodation_Success() throws Exception {
-        // Simulate the service returning true for successful redefinition
+
         when(accommodationService.redefine(any(Long.class), any(List.class))).thenReturn(true);
 
         mockMvc.perform(post("/api/accommodation/redefine")
@@ -61,7 +59,7 @@ public class RedefineAccommodationTest {
 
     @Test
     void testRedefineAccommodation_InvalidId() throws Exception {
-        // Simulate the service returning false for non-existent accommodation ID
+
         when(accommodationService.redefine(any(Long.class), any(List.class))).thenReturn(false);
 
         mockMvc.perform(post("/api/accommodation/redefine")
@@ -101,35 +99,35 @@ public class RedefineAccommodationTest {
 
     @Test
     void testRedefineAccommodation_DateAlreadyTaken() throws Exception {
-        // Simulate the service returning false for dates already taken
+
         when(accommodationService.redefine(any(Long.class), any(List.class))).thenReturn(false);
 
         mockMvc.perform(post("/api/accommodation/redefine")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(redefineDto)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("ERROR"));  // Expecting an ERROR message
+                .andExpect(jsonPath("$.message").value("ERROR"));
     }
 
     @Test
     void testRedefineAccommodation_InvalidDateFormat() throws Exception {
-        // Simulate invalid date format in the request body
+
         String invalidJson = "{\"id\":1, \"datumi\":[\"invalid-date\"]}";
 
         mockMvc.perform(post("/api/accommodation/redefine")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(invalidJson))
-                .andExpect(status().isBadRequest());  // Expecting 400 Bad Request for invalid date format
+                .andExpect(status().isBadRequest());
     }
 
     @Test
     void testRedefineAccommodation_SingleDateInsteadOfList() throws Exception {
-        String invalidJson = "{\"id\":1, \"datumi\":\"2024-09-05\"}"; // Wrong type for "datumi"
+        String invalidJson = "{\"id\":1, \"datumi\":\"2024-09-05\"}";
 
         mockMvc.perform(post("/api/accommodation/redefine")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(invalidJson))
-                .andExpect(status().isBadRequest());  // Expecting 400 Bad Request for incorrect data type
+                .andExpect(status().isBadRequest());
     }
 
 
