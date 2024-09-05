@@ -18,4 +18,3 @@ public class AccommodationDto {
     private List<LocalDate> available;
     private Double price;
 }
-

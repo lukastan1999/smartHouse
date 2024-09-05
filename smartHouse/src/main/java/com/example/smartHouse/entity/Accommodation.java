@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -42,10 +43,10 @@ public class Accommodation {
     private String type;
 
     @ElementCollection
-    private List<LocalDate> available;
+    private List<LocalDate> available = new ArrayList<>();
 
     @ElementCollection
-    private List<LocalDate> taken;
+    private List<LocalDate> taken = new ArrayList<>();
 
     @Column(name = "price")
     private Double price;
