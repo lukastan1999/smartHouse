@@ -63,7 +63,7 @@ public class AccommodationService {
     public Boolean redefine(Long id, List<LocalDate> datumi) {
         Optional<Accommodation> accommodation = accommodationRepository.findById(id);
         if (accommodation.isPresent()) {
-            List<LocalDate> daniZauzeti = accommodation.get().getAvailable();
+            List<LocalDate> daniZauzeti = accommodation.get().getTaken();
             for (LocalDate dejt : datumi) {
                 for (LocalDate datum : daniZauzeti) {
                     if (datum.equals(dejt)) {

@@ -14,4 +14,9 @@ export class AccommodationService {
   getAccommodation(id: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/get?id=${id}`);
   }
+
+  redefineAccommodation(redefineDto: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/redefine`, redefineDto);
+  }
+
 }

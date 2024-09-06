@@ -10,6 +10,8 @@ import { AccommodationService } from '../../services/accommodation.service';
 export class AccommodationDetailsComponent implements OnInit {
 
   accommodation: any;
+  newAvailableDates: string = '';
+  responseMessage: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -33,6 +35,26 @@ export class AccommodationDetailsComponent implements OnInit {
       },
       error => {
         console.error('Error fetching accommodation details', error);
+      }
+    );
+  }
+
+  redefineAccommodation(): void {
+    // Convert the comma-separated dates to an array
+    const datesArray = this.newAvailableDates.split(',').map(date => date.trim());
+
+    const redefineDto = {
+      id: this.accommodation.id,
+      datumi: datesArray
+    };
+
+    this.accommodationService.redefineAccommodation(redefineDto).subscribe(
+      response => {
+        this.responseMessage = response.message;
+      },
+      error => {
+        console.error('Error redefining accommodation', error);
+        this.responseMessage = 'Error redefining accommodation';
       }
     );
   }
