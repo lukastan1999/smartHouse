@@ -1,6 +1,5 @@
 package com.example.smartHouse.dto;
 
-
 import lombok.Data;
 
 import java.time.LocalDate;

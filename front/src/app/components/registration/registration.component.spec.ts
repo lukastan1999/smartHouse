@@ -137,12 +137,10 @@ describe('RegistrationComponent', () => {
 
   it('should mark the email as invalid if the format is incorrect', () => {
     const emailControl = component.registrationForm.controls['email'];
-    
-    // Set an invalid email format
+
     emailControl.setValue('invalid-email');
     fixture.detectChanges();
     
-    // Expect the email control to have an error
     expect(emailControl.errors).not.toBeNull();
     expect(emailControl.errors?.['email']).toBeTruthy(); // Email validation error
   });
@@ -150,11 +148,9 @@ describe('RegistrationComponent', () => {
   it('should mark the password as invalid if it is too short', () => {
     const passwordControl = component.registrationForm.controls['password'];
     
-    // Set a password shorter than the minimum required length (e.g., 8 characters)
     passwordControl.setValue('12345');
     fixture.detectChanges();
     
-    // Expect the password control to have a minlength error
     expect(passwordControl.errors).not.toBeNull();
     expect(passwordControl.errors?.['minlength']).toBeTruthy(); // Minlength validation error
   });  

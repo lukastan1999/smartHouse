@@ -14,7 +14,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest // This annotation sets up an in-memory database and configures Spring Data JPA
+@DataJpaTest // ovom anotacijom kofigurisemo privremenu bazu (h20)
 class AccommodationRepositoryTest {
 
     @Autowired
@@ -24,7 +24,6 @@ class AccommodationRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        // Set up an Accommodation entity to be used in test cases
         accommodation = new Accommodation();
         accommodation.setTitle("Test Accommodation");
         accommodation.setPrice(200.0);
@@ -34,7 +33,6 @@ class AccommodationRepositoryTest {
 
     @Test
     void testSaveAccommodation_Success() {
-        // Save accommodation and verify the result
         Accommodation savedAccommodation = accommodationRepository.save(accommodation);
         assertNotNull(savedAccommodation.getId());
         assertEquals("Test Accommodation", savedAccommodation.getTitle());
@@ -42,7 +40,6 @@ class AccommodationRepositoryTest {
 
     @Test
     void testFindById_Success() {
-        // Save accommodation first, then find it by ID
         Accommodation savedAccommodation = accommodationRepository.save(accommodation);
         Optional<Accommodation> foundAccommodation = accommodationRepository.findById(savedAccommodation.getId());
 
@@ -52,14 +49,12 @@ class AccommodationRepositoryTest {
 
     @Test
     void testFindById_NotFound() {
-        // Attempt to find an accommodation with a non-existing ID
         Optional<Accommodation> foundAccommodation = accommodationRepository.findById(999L);
         assertFalse(foundAccommodation.isPresent());
     }
 
     @Test
     void testDeleteAccommodation_Success() {
-        // Save an accommodation first, then delete it and verify it's deleted
         Accommodation savedAccommodation = accommodationRepository.save(accommodation);
         accommodationRepository.delete(savedAccommodation);
 
@@ -69,7 +64,6 @@ class AccommodationRepositoryTest {
 
     @Test
     void testUpdateAccommodation_Success() {
-        // Save accommodation first, update it, and verify the update
         Accommodation savedAccommodation = accommodationRepository.save(accommodation);
         savedAccommodation.setPrice(300.0); // Update the price
 
@@ -78,11 +72,11 @@ class AccommodationRepositoryTest {
     }
 
 //    @Test
-//    @Sql("/test-sql/sample-data.sql") // Load data from an external SQL file
+//    @Sql("/test-sql/sample-data.sql")
 //    void testFindAllWithSQLData() {
-//        // Verify that the SQL data is loaded and retrievable
 //        List<Accommodation> accommodations = accommodationRepository.findAll();
 //        assertFalse(accommodations.isEmpty());
 //        assertEquals(2, accommodations.size()); // Assuming 2 rows are inserted via SQL
 //    }
+
 }

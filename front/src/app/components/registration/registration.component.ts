@@ -11,8 +11,8 @@ import { RegistrationService } from '../../services/registration.service';
 export class RegistrationComponent {
   registrationForm: FormGroup;
   submitted = false;
-  responseMessage: string = ''; // Variable to store the response message
-  isSuccess: boolean = false;   // Flag to indicate if the registration was successful
+  responseMessage: string = '';
+  isSuccess: boolean = false;
   user = {
     name: '',
     surname: '',
@@ -21,7 +21,7 @@ export class RegistrationComponent {
     confirmPassword: '',
     address: '',
     phoneNumber: '',
-    role: '' // "HOST" or "GUEST"
+    role: '' // "HOST" ili "GUEST"
   };
 
   constructor(private formBuilder: FormBuilder, private registrationService: RegistrationService) {
@@ -32,7 +32,7 @@ export class RegistrationComponent {
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
       address: ['', Validators.required],
-      phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]], // Assuming a 10-digit phone number pattern
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       role: ['', Validators.required]
     }, {
       validator: this.MustMatch('password', 'confirmPassword')
@@ -49,27 +49,25 @@ export class RegistrationComponent {
     if (this.registrationForm.invalid) {
       return;
     }
-    // Handle successful submission
+
     console.log(this.registrationForm.value);
     const formValues = this.registrationForm.value;
 
     this.registrationService.registerUser(formValues).subscribe(
       response => {
         console.log('Registration successful', response);
-        // You can also show a success message to the user or redirect them
         this.responseMessage = 'Registration successful. Please check your email to activate your account.';
         this.isSuccess = true;
       },
       error => {
         console.error('Registration failed', error);
-        // You can show an error message to the user here
         this.responseMessage = 'Registration failed. Please try again.';
         this.isSuccess = false;
       }
     );
   }
 
-  // Custom validator to check if passwords match
+  // dodatni validator
   MustMatch(controlName: string, matchingControlName: string) {
     return (formGroup: FormGroup) => {
       const control = formGroup.controls[controlName];

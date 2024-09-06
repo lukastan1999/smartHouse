@@ -19,9 +19,9 @@ export class AccommodationDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Get the ID from the route parameters
+    // id uzimamo sa rute
     this.route.params.subscribe(params => {
-      const id = +params['id']; // Convert string to number
+      const id = +params['id'];
       if (id) {
         this.getAccommodationDetails(id);
       }
@@ -40,7 +40,7 @@ export class AccommodationDetailsComponent implements OnInit {
   }
 
   redefineAccommodation(): void {
-    // Convert the comma-separated dates to an array
+
     const datesArray = this.newAvailableDates.split(',').map(date => date.trim());
 
     const redefineDto = {

@@ -32,12 +32,10 @@ export class LoginComponent {
     const loginData = this.loginForm.value;
     this.loginService.login(loginData).subscribe({
       next: (user) => {
-        // Handle successful login
         console.log('Login successful', user);
-        this.router.navigate(['/dashboard']); // Navigate to some protected page
+        this.router.navigate(['/dashboard']);
       },
       error: (error) => {
-        // Handle login error
         this.errorMessage = 'Invalid login credentials';
         console.error('Login failed', error);
       }

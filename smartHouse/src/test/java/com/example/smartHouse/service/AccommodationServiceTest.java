@@ -36,14 +36,14 @@ class AccommodationServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        // Create a sample Accommodation entity for testing
         accommodation = new Accommodation();
         accommodation.setId(1L);
         accommodation.setTitle("Test Accommodation");
         accommodation.setPrice(150.0);
         accommodation.setAvailable(new ArrayList<>(List.of(LocalDate.now())));
+        accommodation.setTaken(new ArrayList<>(List.of(LocalDate.now().plusDays(3))));
 
-        // Sample AccommodationDto for testing
+        // AccommodationDto
         accommodationDto = new AccommodationDto();
         accommodationDto.setUserId(1L);
         accommodationDto.setTitle("Test Accommodation");
@@ -88,7 +88,6 @@ class AccommodationServiceTest {
     void testTakeAccommodation_DateNotAvailable() {
         when(accommodationRepository.findById(any(Long.class))).thenReturn(Optional.of(accommodation));
 
-        // Date not available (already taken or unavailable)
         Boolean result = accommodationService.take(1L, LocalDate.of(2022, 1, 1));
 
         assertFalse(result);
@@ -122,7 +121,7 @@ class AccommodationServiceTest {
         when(accommodationRepository.findById(any(Long.class))).thenReturn(Optional.of(accommodation));
 
         // Try to redefine with conflicting dates (dates already taken)
-        List<LocalDate> conflictingDates = List.of(LocalDate.now());
+        List<LocalDate> conflictingDates = List.of(LocalDate.now().plusDays(3));
         Boolean result = accommodationService.redefine(1L, conflictingDates);
 
         assertFalse(result);
